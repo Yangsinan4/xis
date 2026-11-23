@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>苹果树下吃苹果</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  overflow:hidden;
+  background: #87CEEB;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.scene{
+  width:900px;
+  height:600px;
+  position:relative;
+  overflow:hidden;
+}
+/* 草地 */
+.grass{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:120px;
+  background:#4CAF50;
+  border-radius: 50% 50% 0 0 / 30px;
+}
+/* 树干 */
+.tree-trunk{
+  position:absolute;
+  bottom:100px;
+  left:48%;
+  width:70px;
+  height:220px;
+  background:#8B4513;
+  border-radius:10px;
+}
+/* 树冠 */
+.tree-crown{
+  position:absolute;
+  left:35%;
+  bottom:280px;
+  width:320px;
+  height:260px;
+  background:#2E7D32;
+  border-radius:50%;
+  animation: swing 4s ease-in-out infinite alternate;
+}
+@keyframes swing{
+  0%{transform: rotate(-2deg)}
+  100%{transform: rotate(2deg)}
+}
+/* 苹果 */
+.apple{
+  width:34px;
+  height:34px;
+  background:#f44336;
+  border-radius:50%;
+  position:absolute;
+  box-shadow: inset -6px -6px 10px rgba(0,0,0,0.2);
+}
+.apple::before{
+  content:"";
+  position:absolute;
+  top:-7px;
+  left:13px;
+  width:4px;
+  height:10px;
+  background:#5D4037;
+  border-radius:2px;
+}
+.apple-fall{
+  animation: fall 6s linear infinite;
+}
+@keyframes fall{
+  0%{transform: translateY(0)}
+  100%{transform: translateY(400px);opacity:0}
+}
+/* 人物 */
+.person{
+  position:absolute;
+  bottom:100px;
+  left:220px;
+}
+/* 身体 */
+.body{
+  width:55px;
+  height:70px;
+  background:#42A5F5;
+  border-radius:25px;
+  position:absolute;
+  top:45px;
+  left:20px;
+}
+/* 头 */
+.head{
+  width:50px;
+  height:50px;
+  background:#FFCCBC;
+  border-radius:50%;
+  position:absolute;
+  top:0;
+  left:22px;
+}
+/* 嘴巴 */
+.mouth{
+  width:14px;
+  height:7px;
+  background:#d32f2f;
+  border-radius:0 0 14px 14px;
+  position:absolute;
+  top:28px;
+  left:40px;
+  animation: eat 1.8s infinite;
+}
+@keyframes eat{
+  0%,70%,100%{height:7px}
+  80%{height:14px}
+}
+/* 手里苹果 */
+.hand-apple{
+  width:32px;
+  height:32px;
+  background:#f44336;
+  border-radius:50%;
+  position:absolute;
+  top:22px;
+  left:62px;
+  animation: bite 1.8s infinite;
+}
+@keyframes bite{
+  0%,70%,100%{transform:scale(1)}
+  80%{transform:scale(0.7)}
+}
+/* 云 */
+.cloud{
+  position:absolute;
+  background:#fff;
+  border-radius:50%;
+  opacity:0.9;
+  animation: cloudMove 20s linear infinite;
+}
+@keyframes cloudMove{
+  0%{transform: translateX(-150px)}
+  100%{transform: translateX(1050px)}
+}
+</style>
+</head>
+<body>
+<div class="scene">
+  <!-- 云朵 -->
+  <div class="cloud" style="width:80px;height:40px;top:40px;left:0;animation-delay:0s"></div>
+  <div class="cloud" style="width:100px;height:50px;top:80px;left:0;animation-delay:7s"></div>
+
+  <!-- 树 -->
+  <div class="tree-crown">
+    <div class="apple" style="top:30px;left:40px;"></div>
+    <div class="apple" style="top:70px;left:120px;"></div>
+    <div class="apple apple-fall" style="top:20px;left:200px;animation-delay:0s"></div>
+    <div class="apple apple-fall" style="top:90px;left:60px;animation-delay:2s"></div>
+    <div class="apple apple-fall" style="top:110px;left:160px;animation-delay:4s"></div>
+    <div class="apple" style="top:140px;left:220px;"></div>
+  </div>
+  <div class="tree-trunk"></div>
+
+  <!-- 草地 -->
+  <div class="grass"></div>
+
+  <!-- 人物 -->
+  <div class="person">
+    <div class="head">
+      <div class="mouth"></div>
+    </div>
+    <div class="body"></div>
+    <div class="hand-apple"></div>
+  </div>
+</div>
+
+<script>
+// 苹果掉落循环
+const apples = document.querySelectorAll('.apple-fall');
+apples.forEach(apple=>{
+  apple.addEventListener('animationend',()=>{
+    apple.style.animation='none';
+    setTimeout(()=>{
+      apple.style.animation='';
+    },1000);
+  })
+})
+</script>
+</body>
+</html>
